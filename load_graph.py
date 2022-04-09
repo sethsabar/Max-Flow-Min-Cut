@@ -1,20 +1,16 @@
+from posixpath import split
 from graph import Graph
-def load_vertex_file(g, vertex_file):
-    file = open(vertex_file, 'r')
-    lines = file.readlines
-    file.close
-    for line in lines:
-        g.add_vertex(line)
-
-def load_edge_file(g, edge_file):
-    file  = open(edge_file, 'r')
-    lines = file.readlines
-    file.close
+def load_graph(file: str):
+    g = Graph()
+    file  = open(file, 'r')
+    lines = file.readlines()
+    lines = [line for line in lines if line != "\n"]
+    file.close()
     for line in lines:
         split_line = line.split(",")
-        g.add_edge(split_line[0], split_line[1], split_line[2])
-
-def load_graph(vertex_file, edge_file):
-    g = Graph()
-    load_vertex_file(g, vertex_file)
-    load_edge_file(g, edge_file)
+        if not split_line[0] in g.vertices.keys():
+            g.add_vertex(int(split_line[0]))
+        if not split_line[1] in g.vertices.keys():
+            g.add_vertex(int(split_line[1]))
+        g.add_edge(int(split_line[0]), int(split_line[1]), float(split_line[2]))
+    return g

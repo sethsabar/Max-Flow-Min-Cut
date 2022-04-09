@@ -1,3 +1,4 @@
+from numpy import double
 from edge import Edge
 from vertex import Vertex
 
@@ -6,11 +7,11 @@ class Graph:
 		self.vertices = {}
 		self.edges = set()
 	
-	def add_vertex(self, vertex_id):
+	def add_vertex(self, vertex_id: int):
 		v = Vertex(vertex_id)
 		self.vertices[vertex_id] = v
 
-	def add_edge(self, outgoing, incoming, weight):
+	def add_edge(self, outgoing: int, incoming: int, weight: float):
 		v1 = self.vertices[outgoing]
 		v2 = self.vertices[incoming]
 		e = Edge(v1,v2,weight)

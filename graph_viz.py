@@ -1,17 +1,16 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-import edge
+from graph import Graph
+from edge import Edge
 
 
-def graph_viz(graph):
+def graph_viz(graph: Graph):
     G = nx.DiGraph()
-    for 
-
-
-G.add_edge(1,2, weight=1)
-G.add_edge(1,3, weight=2)
-pos = nx.spring_layout(G)
-nx.draw(G, pos, with_labels=True)
-labels = nx.get_edge_attributes(G,'weight')
-nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
-plt.show()
+    edge: Edge
+    for edge in graph.edges:
+        G.add_edge(edge.outgoing_vertex.id, edge.incoming_vertex.id, weight = edge.weight)
+    pos = nx.planar_layout(G)
+    nx.draw(G, pos, with_labels=True)
+    labels = nx.get_edge_attributes(G,'weight')
+    nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
+    plt.show()
