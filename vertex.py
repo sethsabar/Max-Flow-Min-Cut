@@ -8,3 +8,6 @@ class Vertex:
     def add_outgoing_edge(self, edge):
         self.outgoing_edges.add(edge)
     
+    # gets the outgoing edges for a vertex
+    def get_outgoing_edges(self):
+        return self.outgoing_edges

@@ -1,4 +1,3 @@
-import pytest
 from graph import Graph
 from load_graph import load_graph
 from graph_viz import graph_viz
@@ -21,6 +20,3 @@ def test_load_graph():
     g = load_graph("testfiles/edge1.txt")
     assert len(g.vertices) == 6
     assert len(g.edges) == 6
-
-def test_graph_viz():
-    graph_viz(load_graph("testfiles/edge2.txt"))

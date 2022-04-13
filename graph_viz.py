@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from graph import Graph
 from edge import Edge
 
-
+# Takes in a Graph object and visualizes the graph
 def graph_viz(graph: Graph):
     G = nx.DiGraph()
     edge: Edge
