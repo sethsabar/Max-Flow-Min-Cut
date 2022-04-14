@@ -20,3 +20,11 @@ def test_load_graph():
     g = load_graph("testfiles/edge1.txt")
     assert len(g.vertices) == 6
     assert len(g.edges) == 6
+
+def test_deep_copy():
+    g = load_graph("testfiles/edge1.txt")
+    g_alt = g.deep_copy()
+    assert len(g_alt.vertices) == 6
+    assert len(g_alt.edges) == 6
+    assert g.vertices[0] != g_alt.vertices[0]
+    assert g.edges.pop() not in g_alt.edges

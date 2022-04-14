@@ -1,0 +1,25 @@
+{
+    "tests": [
+        {
+            "score": 0,
+            "max_score": 0,
+            "name": "test_graph",
+            "output": "Suppressed output.",
+            "visibility": "visible"
+        },
+        {
+            "score": 0,
+            "max_score": 0,
+            "name": "test_load_graph",
+            "output": "Suppressed output.",
+            "visibility": "visible"
+        },
+        {
+            "score": 0,
+            "max_score": 0,
+            "name": "test_deep_copy",
+            "output": "Suppressed output.",
+            "visibility": "visible"
+        }
+    ]
+}

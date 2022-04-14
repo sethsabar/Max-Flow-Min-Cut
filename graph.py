@@ -19,8 +19,24 @@ class Graph:
 		v2 = self.vertices[incoming]
 		e = Edge(v1,v2,weight)
 		v1.add_outgoing_edge(e)
+		v2.add_incoming_edge(e)
 		self.edges.add(e)
 	
 	# gets a vertex object given a vertex id
 	def get_vertex(self, vertex_id: int):
 		return self.vertices[vertex_id]
+	
+	def deep_copy(self):
+		g = Graph()
+		for e in self.edges:
+			v1 = e.outgoing_vertex.id
+			v2 = e.incoming_vertex.id
+			cap = e.capacity
+			if v1 not in g.vertices.keys():
+				g.add_vertex(v1)
+			if v2 not in g.vertices.keys():
+				g.add_vertex(v2)
+			g.add_edge(v1, v2, cap)
+		return g
+			
+
