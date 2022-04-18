@@ -16,3 +16,7 @@ class Vertex:
     # gets the outgoing edges for a vertex
     def get_outgoing_edges(self):
         return self.outgoing_edges
+
+    # gets the incoming edges for a vertex
+    def get_incoming_edges(self):
+        return self.incoming_edges

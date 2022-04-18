@@ -20,6 +20,13 @@
             "name": "test_deep_copy",
             "output": "Suppressed output.",
             "visibility": "visible"
+        },
+        {
+            "score": 0,
+            "max_score": 0,
+            "name": "test_max_flow",
+            "output": "Suppressed output.",
+            "visibility": "visible"
         }
     ]
 }

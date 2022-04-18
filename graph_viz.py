@@ -8,7 +8,7 @@ def graph_viz(graph: Graph):
     G = nx.DiGraph()
     edge: Edge
     for edge in graph.edges:
-        G.add_edge(edge.outgoing_vertex.id, edge.incoming_vertex.id, weight = edge.weight)
+        G.add_edge(edge.outgoing_vertex.id, edge.incoming_vertex.id, weight = str(edge.flow) + "/" + str(edge.capacity))
     pos = nx.planar_layout(G)
     nx.draw(G, pos, with_labels=True)
     labels = nx.get_edge_attributes(G,'weight')

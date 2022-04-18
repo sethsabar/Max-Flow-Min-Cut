@@ -23,9 +23,16 @@ class Graph:
 		self.edges.add(e)
 	
 	# gets a vertex object given a vertex id
-	def get_vertex(self, vertex_id: int):
+	def get_vertex(self, vertex_id: int) -> Vertex:
 		return self.vertices[vertex_id]
 	
+	def get_edge(self, outgoing: int, incoming: int) -> Edge:
+		outgoing_vertex: Vertex = self.vertices[outgoing]
+		incoming_vertex: Vertex = self.vertices[incoming]
+		for edge in outgoing_vertex.get_outgoing_edges():
+			if edge.get_incoming_vertex() == incoming_vertex:
+				return edge
+
 	def deep_copy(self):
 		g = Graph()
 		for e in self.edges:
@@ -38,5 +45,3 @@ class Graph:
 				g.add_vertex(v2)
 			g.add_edge(v1, v2, cap)
 		return g
-			
-
