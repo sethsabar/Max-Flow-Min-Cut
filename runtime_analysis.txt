@@ -1,0 +1,41 @@
+Max Flow:
+
+The worst case runtime of the Ford Fulkerson algorithm for max flow is quite interesting in that it actually relies on the
+value of the maximum flow. In our algorithm, we continue to increment the flow as we find new non-zero paths from the source
+to the sink. If all of our capacities are integers, the worst case runtime will be
+
+(V + E) * max_flow
+
+where E is the number of vertices, because BFS takes worst case V + E time since we only check each edge and each vertex 
+at most once, and in each iteration we are guarenteed to increment by at least 1, since any incremented flow will have 
+value at least 1. However, we may consider that if we had some graph with all integer capacities, we could divide all 
+of the capacities by some integer, the solution would take exactly the same amount of time to find, just scaled down 
+by that factor. Thus, we may use this logic to observe that if all of our capacities are rational, the worst case runtime 
+will be
+
+(V + E) * max_flow * k
+
+where k is the smallest number such that we may multiply any of our capacities by k and get an integer result. This also means
+that if all of our capacities are integer multiples of 2, for example, we can actually improve our worst case runtime.
+It is well known that the Ford Fulkerson algorithm may not complete if some of the capcities are irrational, as the 
+incrementations could just become increasingly small since there may not be a common factor between the capacities.
+
+In practice, the Ford Fulkerson algorithm usually runs much faster, since in most cases there will be increments
+that increase the flow by a value much greater than k. I think the simplest example of this algorithm actually taking
+close to worst case runtime is when the source has many outgoing edges to intermediate vertices, each of with has an edge
+to the sink. In this case, we will increment very slowly, as we need to find each path seperately. We will also, in each
+iteration of BFS, check about half of the edges. I am curious to learn, however, if there are any graphs which have only a few
+edges but take a long time to run simply due to the nature of the capacities.
+
+Min Cut:
+
+In our runtime analysis of the Min Cut Algorithm, we will assume that the Max Flow has already been calculated. Once we have
+this information, we first apply DFS, which takes worst case V + E runtime since each edge and each vertex are checked at
+most once. Once we have applied DFS to see which vertices are reachable from the source we iterate through each vertex that
+we visited and then through each edge of each of these vertices, to see if it connects to an unreachable vertex. 
+Worst case, we reach every vertex and thus check every edge in the graph, so this will take at most E operations. Thus, the
+runtime of the Min Cut Algorithm is
+
+V + 2E
+
+but again, we must have first run the Ford Fulkerson Max Flow algorithm.

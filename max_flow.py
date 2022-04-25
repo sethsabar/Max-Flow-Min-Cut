@@ -78,8 +78,14 @@ def max_flow_ff(g: Graph, source: int, sink: int) -> float:
     # applying BFS to the graph to see if we can increment the flow
     came_from: dict[Vertex, tuple[Vertex, str]] = bfs(g, so)
 
+    # keeping track of iterations of BFS for runtime curiosity
+    num_iterations = 1
+
     # as long as we have found a non-zero path from the source to the sink via BFS we can improve our flow
     while came_from[si] != None:
+        # incrementing number of iterations of BFS
+        num_iterations += 1
+
         backtrack_vertex: Vertex = si
 
         # initialzing a list of edges for which we'll need to update the flow, we have the tuple with a string
@@ -117,6 +123,8 @@ def max_flow_ff(g: Graph, source: int, sink: int) -> float:
         # repeating the BFS search
         came_from = bfs(g, so)
 
+    print("The Ford Fulkerson Algorithm took " + str(num_iterations) + " steps to complete")
+     
     return flow_val
             
 
