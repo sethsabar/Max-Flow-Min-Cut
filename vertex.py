@@ -1,22 +1,16 @@
+import edge
+
 class Vertex:
     # initializing a vertex with a unique id and an array of outgoing edges
     def __init__(self, id):
         self.id: int = id
-        self.outgoing_edges = set()
-        self.incoming_edges = set()
+        self.outgoing_edges: set[edge.Edge] = set()
+        self.incoming_edges: set[edge.Edge] = set()
     
     # add an outgoing edge for a vertex
-    def add_outgoing_edge(self, edge):
+    def add_outgoing_edge(self, edge: edge.Edge):
         self.outgoing_edges.add(edge)
 
     # add an incoming edge for a vertex
-    def add_incoming_edge(self, edge):
+    def add_incoming_edge(self, edge: edge.Edge):
         self.incoming_edges.add(edge)
-    
-    # gets the outgoing edges for a vertex
-    def get_outgoing_edges(self):
-        return self.outgoing_edges
-
-    # gets the incoming edges for a vertex
-    def get_incoming_edges(self):
-        return self.incoming_edges

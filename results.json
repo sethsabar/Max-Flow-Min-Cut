@@ -3,7 +3,7 @@
         {
             "score": 0,
             "max_score": 0,
-            "name": "test_graph",
+            "name": "test_vertex_and_edge_init",
             "output": "Suppressed output.",
             "visibility": "visible"
         },
@@ -17,14 +17,14 @@
         {
             "score": 0,
             "max_score": 0,
-            "name": "test_deep_copy",
+            "name": "test_max_flow",
             "output": "Suppressed output.",
             "visibility": "visible"
         },
         {
             "score": 0,
             "max_score": 0,
-            "name": "test_max_flow",
+            "name": "test_min_cut",
             "output": "Suppressed output.",
             "visibility": "visible"
         }

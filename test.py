@@ -1,55 +1,70 @@
+import pytest
+from edge import Edge
+from graph_viz import graph_viz
+from min_cut import min_cut
+from vertex import Vertex
 from graph import Graph
 from load_graph import load_graph
-from graph_viz import graph_viz
 from max_flow import max_flow_ff
 
-def test_graph():
+def test_vertex_and_edge_init():
     g = Graph()
-    assert len(g.vertices) == 0
-    assert len(g.edges) == 0
     g.add_vertex(0)
-    assert len(g.vertices) == 1
     g.add_vertex(1)
-    assert len(g.vertices) == 2
-    g.add_edge(0,1,2)
-    assert len(g.edges) == 1
-    for e in g.edges:
-        assert e.outgoing_vertex == g.vertices[0]
-        assert e.incoming_vertex == g.vertices[1]
+    g.add_vertex(2)
+    g.add_vertex(3)
+    g.add_edge(0,1,2.5)
+    g.add_edge(0,2,3)
+    g.add_edge(2,3,4)
+
+    assert [0,1,2,3] == [v for v in g.vertices.keys()]
+    assert [(0,1), (0,2), (2,3)] == [e for e in g.edges.keys()]
+    assert [2.5,3,4] == [e.capacity for e in g.edges.values()]
 
 def test_load_graph():
-    g = load_graph("testfiles/edge1.txt")
-    assert len(g.vertices) == 6
-    assert len(g.edges) == 6
+    g = load_graph("testfiles/test1.txt")
+    assert [0,1] == [v for v in g.vertices.keys()]
+    assert [(0,1)] == [e for e in g.edges.keys()]
+    assert [1] == [e.capacity for e in g.edges.values()]
 
-def test_deep_copy():
-    g = load_graph("testfiles/edge1.txt")
-    g_alt = g.deep_copy()
-    assert len(g_alt.vertices) == 6
-    assert len(g_alt.edges) == 6
-    assert g.vertices[0] != g_alt.vertices[0]
-    assert g.edges.pop() not in g_alt.edges
-    assert g_alt.vertices[1].incoming_edges.pop() in g_alt.vertices[0].outgoing_edges
+    g = load_graph("testfiles/test2.txt")
+    assert [0,1,2,3] == [v for v in g.vertices.keys()]
+    assert [(0,1), (1,2), (2,3), (3,0)] == [e for e in g.edges.keys()]
+    assert [3.2, 4, 0.4, 1] == [e.capacity for e in g.edges.values()]
 
 def test_max_flow():
-    g1 = load_graph("testfiles/edge1.txt")
-    g1_alt_1 = max_flow_ff(g1, 0, 3)
-    assert g1_alt_1.get_edge(0, 1).get_flow() == 1
-    assert g1_alt_1.get_edge(1, 2).get_flow() == 1
-    assert g1_alt_1.get_edge(2, 3).get_flow() == 1
-    g1_alt_2 = max_flow_ff(g1, 1, 4)
-    assert g1_alt_2.get_edge(1, 2).get_flow() == 2
-    assert g1_alt_2.get_edge(2, 3).get_flow() == 2
-    assert g1_alt_2.get_edge(3, 4).get_flow() == 2
+    g = load_graph("testfiles/test1.txt")
+    assert 1 == max_flow_ff(g,0,1)
+    g.clear()
+    assert 0 == max_flow_ff(g,1,0)
 
-    g2 = load_graph("testfiles/edge3.txt")
-    g2_alt = max_flow_ff(g2, 0, 3)
-    assert g2_alt.get_edge(0, 1).get_flow() == 14
-    assert g2_alt.get_edge(0, 2).get_flow() == 13
-    assert g2_alt.get_edge(1, 3).get_flow() == 12
-    assert g2_alt.get_edge(2, 3).get_flow() == 15
-    assert g2_alt.get_edge(1, 2).get_flow() == 2
+    g = load_graph("testfiles/test2.txt")
+    assert 3.2 == max_flow_ff(g,0,2)
+    g.clear()
+    assert 0.4 == max_flow_ff(g,0,3)
+    g.clear()
+    assert 1 == max_flow_ff(g,3,0)
 
-    g3 = load_graph("testfiles/edge5.txt")
-    g3_alt = max_flow_ff(g3,0,3)
-    assert g3_alt.get_edge(0,1).get_flow() == 0
+    g = load_graph("testfiles/test3.txt")
+    assert 8 == max_flow_ff(g,0,5)
+
+def test_min_cut():
+    g = load_graph("testfiles/test1.txt")
+    max_flow_ff(g,0,1)
+    assert 1 == min_cut(g,0)
+    g.clear()
+    assert 0 == min_cut(g,1)
+
+    g = load_graph("testfiles/test2.txt")
+    max_flow_ff(g,0,2)
+    assert 3.2 == min_cut(g,0)
+    g.clear()
+    max_flow_ff(g,0,3)
+    assert 0.4 == min_cut(g,0)
+    g.clear()
+    max_flow_ff(g,3,0)
+    assert 1 == min_cut(g,3)
+
+    g = load_graph("testfiles/test3.txt")
+    max_flow_ff(g,0,5)
+    assert 8 == min_cut(g,0)
